@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "recipes",
+  "info": {
+    "name": "Recipe",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fruits_list": {
+      "type": "component",
+      "repeatable": false,
+      "custom_ui": true,
+      "component": "fruits.fruit-offer"
+    }
+  }
+}

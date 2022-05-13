@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_fruits_fruit_offers",
+  "info": {
+    "name": "Fruit_offer",
+    "icon": "apple-alt"
+  },
+  "options": {},
+  "attributes": {
+    "fruits": {
+      "collection": "fruits"
+    }
+  }
+}
