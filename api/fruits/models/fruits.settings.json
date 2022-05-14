@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "fruits",
   "info": {
-    "name": "Fruits"
+    "name": "Fruits",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -11,10 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string"
     },
-    "Description": {
+    "description": {
       "type": "text"
     }
   }

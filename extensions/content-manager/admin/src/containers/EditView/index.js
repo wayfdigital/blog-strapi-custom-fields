@@ -26,6 +26,7 @@ import { createAttributesLayout, getFieldsActionMatchingPermissions } from './ut
 import { LinkWrapper, SubWrapper } from './components';
 import DeleteLink from './DeleteLink';
 import InformationCard from './InformationCard';
+import FruitsComponent from '../../components/FruitsComponent';
 
 /* eslint-disable  react/no-array-index-key */
 const EditView = ({
@@ -40,13 +41,10 @@ const EditView = ({
 }) => {
   const { currentEnvironment, plugins } = useGlobalContext();
 
-  const {
-    createActionAllowedFields,
-    readActionAllowedFields,
-    updateActionAllowedFields,
-  } = useMemo(() => {
-    return getFieldsActionMatchingPermissions(userPermissions, slug);
-  }, [userPermissions, slug]);
+  const { createActionAllowedFields, readActionAllowedFields, updateActionAllowedFields } =
+    useMemo(() => {
+      return getFieldsActionMatchingPermissions(userPermissions, slug);
+    }, [userPermissions, slug]);
   const configurationPermissions = useMemo(() => {
     return isSingleType
       ? pluginPermissions.singleTypesConfigurations
@@ -60,13 +58,13 @@ const EditView = ({
 
   const DataManagementWrapper = useMemo(
     () => (isSingleType ? SingleTypeFormWrapper : CollectionTypeFormWrapper),
-    [isSingleType]
+    [isSingleType],
   );
 
   // Check if a block is a dynamic zone
-  const isDynamicZone = useCallback(block => {
-    return block.every(subBlock => {
-      return subBlock.every(obj => obj.fieldSchema.type === 'dynamiczone');
+  const isDynamicZone = useCallback((block) => {
+    return block.every((subBlock) => {
+      return subBlock.every((obj) => obj.fieldSchema.type === 'dynamiczone');
     });
   }, []);
 
@@ -77,7 +75,7 @@ const EditView = ({
 
     return createAttributesLayout(
       currentContentTypeLayoutData.layouts.edit,
-      currentContentTypeLayoutData.attributes
+      currentContentTypeLayoutData.attributes,
     );
   }, [currentContentTypeLayoutData]);
 
@@ -154,8 +152,9 @@ const EditView = ({
                               {fieldsBlock.map(
                                 ({ name, size, fieldSchema, labelIcon, metadatas }, fieldIndex) => {
                                   const isComponent = fieldSchema.type === 'component';
+                                  const hasCustomUI = fieldSchema['custom_ui'] ?? false;
 
-                                  if (isComponent) {
+                                  if (isComponent && !hasCustomUI) {
                                     const { component, max, min, repeatable = false } = fieldSchema;
                                     const componentUid = fieldSchema.component;
 
@@ -169,6 +168,22 @@ const EditView = ({
                                         max={max}
                                         min={min}
                                         name={name}
+                                      />
+                                    );
+                                  }
+
+                                  if (isComponent && hasCustomUI) {
+                                    const { component, max, min, repeatable = false } = fieldSchema;
+
+                                    return (
+                                      <FruitsComponent
+                                        key={component}
+                                        componentUid={component}
+                                        labelIcon={labelIcon}
+                                        max={max}
+                                        min={min}
+                                        name={name}
+                                        repeatable={repeatable}
                                       />
                                     );
                                   }
@@ -188,7 +203,7 @@ const EditView = ({
                                       />
                                     </div>
                                   );
-                                }
+                                },
                               )}
                             </div>
                           );
@@ -216,7 +231,7 @@ const EditView = ({
                                 queryInfos={queryInfos}
                               />
                             );
-                          }
+                          },
                         )}
                       </div>
                     </SubWrapper>
@@ -240,7 +255,7 @@ const EditView = ({
                         'right.links',
                         plugins,
                         currentEnvironment,
-                        slug
+                        slug,
                       )}
                       {allowedActions.canDelete && (
                         <DeleteLink
