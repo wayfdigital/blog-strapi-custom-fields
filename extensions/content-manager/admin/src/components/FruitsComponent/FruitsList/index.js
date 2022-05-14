@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox } from '@buffetjs/core';
+import { Fruit } from './FruitsList.parts.js';
 
-export const FruitsList = ({ fruits }) => {
+export const FruitsList = ({ fruits, checkedFruits }) => {
   const hasFruits = fruits.length !== 0;
 
   if (!hasFruits) {
@@ -13,18 +13,12 @@ export const FruitsList = ({ fruits }) => {
     <ul>
       {fruits.map((fruit, index) => {
         const key = `_fruit_${fruit.name}`;
-        const label = `${index}. ${fruit.name}`;
+        const label = `${index + 1}. ${fruit.name}`;
+        const fieldIndex = checkedFruits.findIndex((item) => item?.id === fruit.id);
+        const checked = fieldIndex !== -1;
+
         return (
-          <li key={key} style={{ paddingTop: 15 }}>
-            <Checkbox
-              name={fruit.name}
-              message={label}
-              value={fruit.name}
-              onChange={(e) => {
-                console.log(e);
-              }}
-            />
-          </li>
+          <Fruit fruit={fruit} key={key} label={label} checked={checked} fieldIndex={fieldIndex} />
         );
       })}
     </ul>
@@ -33,8 +27,10 @@ export const FruitsList = ({ fruits }) => {
 
 FruitsList.propTypes = {
   fruits: PropTypes.array,
+  checkedFruits: PropTypes.array,
 };
 
 FruitsList.defaultProps = {
   fruits: [],
+  checkedFruits: [],
 };

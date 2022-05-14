@@ -21,12 +21,11 @@ const FruitComponent = ({ componentValue }) => {
   return (
     <Padded top left right bottomsize="smd">
       <Text fontWeight="bold">Fruits List</Text>
-      <Checkbox name="selectAll" />
-      <FruitsList fruits={fruits} />
+      <Checkbox message="Select All" name="selectAll" />
+      <FruitsList fruits={fruits} checkedFruits={componentValue?.fruits} />
     </Padded>
   );
 };
 
 const Memoized = memo(FruitComponent, isEqual);
-
 export default connect(Memoized, select);
