@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@buffetjs/core';
 import { Tooltip } from '@buffetjs/styles';
-import { useFruitField } from './FruitsList.hook';
+import { useFruitField } from './FruitsList.hooks';
 
 export const Fruit = ({ fruit, label, checked, fieldIndex }) => {
   const { add, remove } = useFruitField();

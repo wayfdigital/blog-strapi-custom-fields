@@ -1,6 +1,6 @@
 import React, { memo, useState, useEffect } from 'react';
 import isEqual from 'react-fast-compare';
-import { Padded, Text, Checkbox } from '@buffetjs/core';
+import { Padded, Text } from '@buffetjs/core';
 import { getFruits } from '../../utils/fruits';
 import connect from '../FieldComponent/utils/connect';
 import select from '../FieldComponent/utils/select';
@@ -14,14 +14,13 @@ const FruitComponent = ({ componentValue }) => {
     getFruits().then(setFruits);
   }, []);
 
-  if (!hasComponentValue && fruits.length === 0) {
+  if (!hasComponentValue && !fruits.length) {
     return null;
   }
 
   return (
     <Padded top left right bottomsize="smd">
       <Text fontWeight="bold">Fruits List</Text>
-      <Checkbox message="Select All" name="selectAll" />
       <FruitsList fruits={fruits} checkedFruits={componentValue?.fruits} />
     </Padded>
   );
