@@ -1,15 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@buffetjs/core';
+import { Tooltip } from '@buffetjs/styles';
 import { useFruitField } from './FruitsList.hook';
 
 export const Fruit = ({ fruit, label, checked, fieldIndex }) => {
-  const { add, remove } = useFruitField({ fieldIndex });
+  const { add, remove } = useFruitField();
 
-  const handleCheckboxChange = () => (checked ? remove() : add(fruit));
+  const handleCheckboxChange = () => (checked ? remove(fieldIndex) : add(fruit));
 
   return (
-    <Checkbox name={fruit.name} message={label} value={checked} onChange={handleCheckboxChange} />
+    <>
+      <div data-for="fruit_desc" data-tip={fruit.description}>
+        <Checkbox
+          name={fruit.name}
+          message={label}
+          value={checked}
+          onChange={handleCheckboxChange}
+        />
+      </div>
+      <Tooltip id="fruit_desc" />
+    </>
   );
 };
 
